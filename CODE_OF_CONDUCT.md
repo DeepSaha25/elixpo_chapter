@@ -1,128 +1,116 @@
-# Contributor Covenant Code of Conduct
+# ElixpoAI Art Generator - Code of Conduct  
+### (Hacktoberfest 2025 Edition)
 
-## Our Pledge
+## 🌍 Our Pledge  
 
-We as members, contributors, and leaders pledge to make participation in our
-community a harassment-free experience for everyone, regardless of age, body
-size, visible or invisible disability, ethnicity, sex characteristics, gender
-identity and expression, level of experience, education, socio-economic status,
-nationality, personal appearance, race, religion, or sexual identity
-and orientation.
+We, as members, contributors, and leaders of the **ElixpoAI Art Generator** community, pledge to make participation in our project a **harassment-free and welcoming experience** for everyone, regardless of:
 
-We pledge to act and interact in ways that contribute to an open, welcoming,
-diverse, inclusive, and healthy community.
+- Age, body size, or visible/invisible disability  
+- Ethnicity, gender identity, and expression  
+- Level of experience or technical background  
+- Education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation  
 
-## Our Standards
+We commit to fostering an **inclusive, friendly, and respectful** environment for collaboration, innovation, and learning — especially during community events like **Hacktoberfest 2025**.
 
-Examples of behavior that contributes to a positive environment for our
-community include:
+---
 
-* Demonstrating empathy and kindness toward other people
-* Being respectful of differing opinions, viewpoints, and experiences
-* Giving and gracefully accepting constructive feedback
-* Accepting responsibility and apologizing to those affected by our mistakes,
-  and learning from the experience
-* Focusing on what is best not just for us as individuals, but for the
-  overall community
+## 🤝 Our Standards  
 
-Examples of unacceptable behavior include:
+### Positive Behaviors:
+Examples of conduct that contribute to a positive environment include:
+- Showing empathy, kindness, and respect toward others  
+- Being open to different opinions, ideas, and perspectives  
+- Providing constructive, helpful feedback  
+- Owning mistakes and learning from them  
+- Focusing on collaboration and the success of the community over individual gains  
 
-* The use of sexualized language or imagery, and sexual attention or
-  advances of any kind
-* Trolling, insulting or derogatory comments, and personal or political attacks
-* Public or private harassment
-* Publishing others' private information, such as a physical or email
-  address, without their explicit permission
-* Other conduct which could reasonably be considered inappropriate in a
-  professional setting
+### Unacceptable Behaviors:
+Examples of behavior that are **not tolerated** include:
+- Harassment, discrimination, or personal attacks  
+- Use of sexualized language or imagery  
+- Trolling, insulting, or derogatory comments  
+- Publishing private information (e.g., personal emails or addresses) without consent  
+- Sustained disruption or disrespectful communication in community spaces  
 
-## Enforcement Responsibilities
+---
 
-Community leaders are responsible for clarifying and enforcing our standards of
-acceptable behavior and will take appropriate and fair corrective action in
-response to any behavior that they deem inappropriate, threatening, offensive,
-or harmful.
+## 🛡️ Enforcement Responsibilities  
 
-Community leaders have the right and responsibility to remove, edit, or reject
-comments, commits, code, wiki edits, issues, and other contributions that are
-not aligned to this Code of Conduct, and will communicate reasons for moderation
-decisions when appropriate.
+Community leaders (project maintainers and moderators) are responsible for clarifying and enforcing acceptable behavior.  
+They may take appropriate, fair corrective action for any behavior that they deem:
 
-## Scope
+- Inappropriate,  
+- Threatening,  
+- Offensive, or  
+- Harmful.  
 
-This Code of Conduct applies within all community spaces, and also applies when
-an individual is officially representing the community in public spaces.
-Examples of representing our community include using an official e-mail address,
-posting via an official social media account, or acting as an appointed
-representative at an online or offline event.
+Maintainers have the right to edit, remove, or reject comments, commits, code, wiki edits, issues, and other contributions that violate this Code of Conduct.  
 
-## Enforcement
+---
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the community leaders responsible for enforcement at
-ayushbhatt633@gmail.com.
-All complaints will be reviewed and investigated promptly and fairly.
+## 🌐 Scope  
 
-All community leaders are obligated to respect the privacy and security of the
-reporter of any incident.
+This Code of Conduct applies to:
+- All **project spaces** (GitHub discussions, issues, pull requests, etc.)  
+- Any **public interactions** where an individual officially represents the project or its community (e.g., social media, events, workshops).  
 
-## Enforcement Guidelines
+Representation examples include using an official project account, posting on the project’s behalf, or participating as an appointed community member.
 
-Community leaders will follow these Community Impact Guidelines in determining
-the consequences for any action they deem in violation of this Code of Conduct:
+---
+
+## 🚨 Enforcement  
+
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported by emailing the project maintainers at:  
+📧 **elixpo.chapter.team@gmail.com**
+
+All complaints will be reviewed and investigated promptly, fairly, and confidentially.  
+Community leaders are **obligated to protect the privacy and safety** of the reporter.
+
+---
+
+## ⚖️ Enforcement Guidelines  
+
+Community leaders will use the following guidelines to determine consequences for violations:
 
 ### 1. Correction
+**Impact:** Inappropriate language or behavior deemed unprofessional or unwelcome.  
+**Consequence:** Private, written warning and clarification of the violation. A public apology may be requested.
 
-**Community Impact**: Use of inappropriate language or other behavior deemed
-unprofessional or unwelcome in the community.
-
-**Consequence**: A private, written warning from community leaders, providing
-clarity around the nature of the violation and an explanation of why the
-behavior was inappropriate. A public apology may be requested.
+---
 
 ### 2. Warning
+**Impact:** A single or repeated violation.  
+**Consequence:** Official warning with restrictions on further interaction with affected parties for a defined period.
 
-**Community Impact**: A violation through a single incident or series
-of actions.
-
-**Consequence**: A warning with consequences for continued behavior. No
-interaction with the people involved, including unsolicited interaction with
-those enforcing the Code of Conduct, for a specified period of time. This
-includes avoiding interactions in community spaces as well as external channels
-like social media. Violating these terms may lead to a temporary or
-permanent ban.
+---
 
 ### 3. Temporary Ban
+**Impact:** Serious or repeated violations of community standards.  
+**Consequence:** Temporary suspension from participation in community activities and communications.
 
-**Community Impact**: A serious violation of community standards, including
-sustained inappropriate behavior.
-
-**Consequence**: A temporary ban from any sort of interaction or public
-communication with the community for a specified period of time. No public or
-private interaction with the people involved, including unsolicited interaction
-with those enforcing the Code of Conduct, is allowed during this period.
-Violating these terms may lead to a permanent ban.
+---
 
 ### 4. Permanent Ban
+**Impact:** Severe, sustained harassment, discrimination, or aggression.  
+**Consequence:** Permanent exclusion from the community and related spaces.
 
-**Community Impact**: Demonstrating a pattern of violation of community
-standards, including sustained inappropriate behavior,  harassment of an
-individual, or aggression toward or disparagement of classes of individuals.
+---
 
-**Consequence**: A permanent ban from any sort of public interaction within
-the community.
+## 📜 Attribution  
 
-## Attribution
+This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 2.1, available at:  
+https://www.contributor-covenant.org/version/2/1/code_of_conduct.html  
 
-This Code of Conduct is adapted from the [Contributor Covenant][homepage],
-version 2.0, available at
-https://www.contributor-covenant.org/version/2/0/code_of_conduct.html.
+Enforcement guidelines were inspired by the [Mozilla Community Participation Guidelines](https://www.mozilla.org/en-US/about/governance/policies/participation/).  
 
-Community Impact Guidelines were inspired by [Mozilla's code of conduct
-enforcement ladder](https://github.com/mozilla/diversity).
+[homepage]: https://www.contributor-covenant.org  
+[faq]: https://www.contributor-covenant.org/faq  
+[translations]: https://www.contributor-covenant.org/translations  
 
-[homepage]: https://www.contributor-covenant.org
-Poll_EC53MY42FN5NTX3JQNJJIY3LE7U
-For answers to common questions about this code of conduct, see the FAQ at
-https://www.contributor-covenant.org/faq. Translations are available at
-https://www.contributor-covenant.org/translations.
+---
+
+## 💖 Final Note  
+
+By contributing to this project — especially during **Hacktoberfest 2025** — you agree to uphold the values of **respect, collaboration, and inclusivity** that make open-source communities thrive.  
+Thank you for helping make the ElixpoAI ecosystem a welcoming and creative space for everyone.  
+

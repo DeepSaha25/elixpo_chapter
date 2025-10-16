@@ -1,23 +1,43 @@
-import { createClient } from "redis";
+const redis = require('redis');
+const { RateLimiterRedis } = require('rate-limiter-flexible');
 
-const redis = createClient({
-  url: process.env.REDIS_URL
+const redisClient = redis.createClient({
+    // Your Redis configuration
 });
 
-redis.on("connect", () => console.log("✅ Redis connected"));
-redis.on("error", (err) => console.error("Redis error:", err));
+redisClient.on('error', (err) => console.log('Redis Client Error', err));
 
-await redis.connect();
+(async () => {
+    await redisClient.connect();
+})();
 
-export function getRedisClient(prefix = "") {
-  return {
-    set: (key, val, ttl = null) =>
-      ttl
-        ? redis.set(`${prefix}:${key}`, val, { 'EX': ttl })
-        : redis.set(`${prefix}:${key}`, val),
-    get: (key) => redis.get(`${prefix}:${key}`),
-    del: (key) => redis.del(`${prefix}:${key}`),
-  };
-}
+const rateLimiter = new RateLimiterRedis({
+    storeClient: redisClient,
+    keyPrefix: 'middleware',
+    points: 10, // 10 requests
+    duration: 1, // per 1 second by IP
+});
 
-export default redis;
+const checkUsernameInSet = async (username) => {
+    try {
+        return await redisClient.sIsMember('usernames_set', username);
+    } catch (error) {
+        console.error('Error checking username in Redis Set:', error);
+        return false;
+    }
+};
+
+const addUsernameToSet = async (username) => {
+    try {
+        await redisClient.sAdd('usernames_set', username);
+    } catch (error) {
+        console.error('Error adding username to Redis Set:', error);
+    }
+};
+
+module.exports = {
+    redisClient,
+    rateLimiter,
+    checkUsernameInSet,
+    addUsernameToSet,
+};

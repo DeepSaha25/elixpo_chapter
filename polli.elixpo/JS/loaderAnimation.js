@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
       "code-slash-outline",
     ];
   
-    let i = 0;
-  
     // Lucid icon transition function
     function animateIconTransition(newName) {
       // Animate out current icon: slide up + fade out + scale down
@@ -28,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ease: "power1.in",
         })
         .add(() => {
-          icon.setAttribute("name", newName);
+          if (icon) icon.setAttribute("name", newName);
         })
         // Animate in new icon: slide down + fade in + scale up
         .to(icon, {
@@ -42,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Animate text subtle scale pulse
     function animateTextPulse() {
+      if (typeof anime === 'undefined' || !text) return;
       anime({
         targets: text,
         scale: [1, 1.1, 1],
@@ -61,13 +60,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 700);
   
     // Animate progress bar with Anime.js stagger
-    anime({
-      targets: segments,
-      scaleX: [0, 1],
-      opacity: [0, 1],
-      easing: "easeOutExpo",
-      delay: anime.stagger(150, { start: 500 }),
-    });
+    if (typeof anime !== 'undefined') {
+        anime({
+          targets: segments,
+          scaleX: [0, 1],
+          opacity: [0, 1],
+          easing: "easeOutExpo",
+          delay: anime.stagger(150, { start: 500 }),
+        });
+    }
   
     // When page fully loaded
     window.onload = () => {
@@ -75,45 +76,47 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(iconInterval);
   
         // Animate loader fade out
-        gsap.to(loader, {
-          duration: 1,
-          opacity: 0,
-          pointerEvents: "none",
-          ease: "power2.out",
-          onComplete: () => {
-            loader.style.display = "none";
-  
-            // Animate first section fade-up
-            if (firstSection) {
-              gsap.fromTo(
-                firstSection,
-                { y: 50, opacity: 0 },
-                {
-                  y: 0,
-                  opacity: 1,
-                  duration: 1.2,
-                  ease: "power3.out",
-                  onComplete: () => {
-                    document.body.style.overflow = "all"; 
-                    document.getElementById("container").style.overflow = "all"; // prevent scroll
-                  },
+        if (loader) {
+            gsap.to(loader, {
+              duration: 1,
+              opacity: 0,
+              pointerEvents: "none",
+              ease: "power2.out",
+              onComplete: () => {
+                loader.style.display = "none";
+      
+                // Animate first section fade-up
+                if (firstSection) {
+                  gsap.fromTo(
+                    firstSection,
+                    { y: 50, opacity: 0 },
+                    {
+                      y: 0,
+                      opacity: 1,
+                      duration: 1.2,
+                      ease: "power3.out",
+                      onComplete: () => {
+                        // FIX: Unlock scrolling by setting overflow to 'auto'
+                        document.body.style.overflow = "auto"; 
+                        const container = document.getElementById("container");
+                        if (container) container.style.overflow = "auto"; 
+                      },
+                    }
+                  );
+                } else {
+                  // fallback unlock scroll if no section
+                  document.body.style.overflow = "auto";
+                  const container = document.getElementById("container");
+                  if (container) container.style.overflow = "auto"; 
                 }
-              );
-            } else {
-              // fallback unlock scroll if no section
-              document.body.style.overflow = "auto";
-              document.getElementById("container").style.overflow = "all"; 
-            }
-          },
-        });
+              },
+            });
+        }
       },  400);
     };
-    document.body.style.overflow = "hidden";
     
+    // Initial scroll lock (set on DOMContentLoaded)
+    document.body.style.overflow = "hidden";
+    const container = document.getElementById("container");
+    if (container) container.style.overflow = "hidden"; 
   });
-  document.getElementById("container").style.overflow = "hidden"; // prevent scroll
-
-  
-
-
-      

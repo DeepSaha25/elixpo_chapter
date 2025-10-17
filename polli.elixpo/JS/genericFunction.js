@@ -4,108 +4,135 @@ function createToastNotification(msg) {
       </div>`;
 
     const notificationContainer = document.getElementById('notificationCenter');
+    if (!notificationContainer) {
+        console.error("Notification container not found.");
+        return;
+    }
 
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = notifNode.trim();
     const notifElement = tempDiv.firstChild;
 
     notificationContainer.appendChild(notifElement);
-    anime({
-        targets: notifElement,
-        opacity: [0, 1],
-        translateY: [-20, 0],
-        duration: 500,
-        easing: 'easeOutQuad'
-    });
-
-    setTimeout(() => {
+    if (typeof anime !== 'undefined') {
         anime({
             targets: notifElement,
-            opacity: [1, 0],
-            translateY: [0, -20],
+            opacity: [0, 1],
+            translateY: [-20, 0],
             duration: 500,
-            easing: 'easeInQuad',
-            complete: () => {
-                if (notificationContainer.contains(notifElement)) {
-                    notificationContainer.removeChild(notifElement);
-                }
-            }
+            easing: 'easeOutQuad'
         });
-    }, 1200);
 
+        setTimeout(() => {
+            anime({
+                targets: notifElement,
+                opacity: [1, 0],
+                translateY: [0, -20],
+                duration: 500,
+                easing: 'easeInQuad',
+                complete: () => {
+                    if (notificationContainer.contains(notifElement)) {
+                        notificationContainer.removeChild(notifElement);
+                    }
+                }
+            });
+        }, 1200);
+    } else {
+        // Fallback for no animation
+        setTimeout(() => {
+            if (notificationContainer.contains(notifElement)) {
+                notificationContainer.removeChild(notifElement);
+            }
+        }, 1700); // Wait for the display time
+    }
+
+
+    // Limit visible notifications
     if (notificationContainer.children.length > 3) {
         const excessNotif = notificationContainer.children[0];
-        anime({
-            targets: excessNotif,
-            opacity: [1, 0],
-            translateY: [0, -20],
-            duration: 500,
-            easing: 'easeInQuad',
-            complete: () => {
-                if (notificationContainer.contains(excessNotif)) {
-                    notificationContainer.removeChild(excessNotif);
+        if (typeof anime !== 'undefined') {
+             anime({
+                targets: excessNotif,
+                opacity: [1, 0],
+                translateY: [0, -20],
+                duration: 500,
+                easing: 'easeInQuad',
+                complete: () => {
+                    if (notificationContainer.contains(excessNotif)) {
+                        notificationContainer.removeChild(excessNotif);
+                    }
                 }
+            });
+        } else {
+             // Fallback to instantly remove
+            if (notificationContainer.contains(excessNotif)) {
+                notificationContainer.removeChild(excessNotif);
             }
-        });
+        }
     }
 }
 
 
-// SOCIAL LINKS 
+// SOCIAL LINKS (Added noopener,noreferrer for security)
 
-document.getElementById("linkedinRedirect").addEventListener("click", function () {
-    window.open("https://www.linkedin.com/company/pollinations-ai/posts/?feedView=all", "_blank");
+document.getElementById("linkedinRedirect")?.addEventListener("click", function () {
+    window.open("https://www.linkedin.com/company/pollinations-ai/posts/?feedView=all", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("githubRedirect").addEventListener("click", function () {
-    window.open("https://github.com/pollinations/pollinations", "_blank");
+document.getElementById("githubRedirect")?.addEventListener("click", function () {
+    window.open("https://github.com/pollinations/pollinations", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("discordRedirect").addEventListener("click", function () {
-    window.open("https://discord.com/invite/k9F7SyTgqn", "_blank");
+document.getElementById("discordRedirect")?.addEventListener("click", function () {
+    window.open("https://discord.com/invite/k9F7SyTgqn", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("instagramRedirect").addEventListener("click", function () {
-    window.open("https://www.instagram.com/pollinations_ai", "_blank");
+document.getElementById("instagramRedirect")?.addEventListener("click", function () {
+    window.open("https://www.instagram.com/pollinations.ai", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("tiktokRedirect").addEventListener("click", function () {
-    window.open("https://tiktok.com/@pollinations.ai", "_blank");
+document.getElementById("tiktokRedirect")?.addEventListener("click", function () {
+    window.open("https://tiktok.com/@pollinations.ai", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("youtubeRedirect").addEventListener("click", function () {
-    window.open("https://www.youtube.com/channel/UCk4yKnLnYfyUmCCbDzOZOug", "_blank");
+document.getElementById("youtubeRedirect")?.addEventListener("click", function () {
+    window.open("https://www.youtube.com/channel/UCk4yKnLnYfyUmCCbDzOZOug", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("githubReadme").addEventListener("click", function () {
-    window.open("https://github.com/pollinations/pollinations", "_blank");
+document.getElementById("githubReadme")?.addEventListener("click", function () {
+    window.open("https://github.com/pollinations/pollinations", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("discordInvite").addEventListener("click", function () {
-    window.open("https://discord.com/invite/k9F7SyTgqn", "_blank");
+document.getElementById("discordInvite")?.addEventListener("click", function () {
+    window.open("https://discord.com/invite/k9F7SyTgqn", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("tippingRedirects").addEventListener("click", function () {
-    window.open("https://ko-fi.com/pollinationsai", "_blank");
+document.getElementById("tippingRedirects")?.addEventListener("click", function () {
+    window.open("https://ko-fi.com/pollinationsai", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("projectSubmit").addEventListener("click", function () {
-    window.open("https://github.com/pollinations/pollinations/issues/new?template=project-submission.yml", "_blank");
+document.getElementById("projectSubmit")?.addEventListener("click", function () {
+    window.open("https://github.com/pollinations/pollinations/issues/new?template=project-submission.yml", "_blank", "noopener,noreferrer");
 });
 
-document.getElementById("apiDocsVisit").addEventListener("click", function () {
-    window.open("https://github.com/pollinations/pollinations/blob/master/APIDOCS.md", "_blank");
+document.getElementById("apiDocsVisit")?.addEventListener("click", function () {
+    window.open("https://github.com/pollinations/pollinations/blob/master/APIDOCS.md", "_blank", "noopener,noreferrer");
 });
 
 
 let box_node = `<div class="box"></div>`;
-for (let i = 0; i < 35; i++) {
-    document.getElementById("topBoxesDesigns").innerHTML += box_node;
+const topBoxesDesigns = document.getElementById("topBoxesDesigns");
+if (topBoxesDesigns) {
+    for (let i = 0; i < 35; i++) {
+        topBoxesDesigns.innerHTML += box_node;
+    }
 }
 
 
-
-async function updateGithubStarCount(owner, repo) {
+// Removed unused parameters 'owner' and 'repo'
+async function updateGithubStarCount() {
+    const owner = 'pollinations';
+    const repo = 'pollinations';
     const starCountElem = document.getElementById('githubStarCount');
     if (!starCountElem) return;
   
@@ -121,7 +148,7 @@ async function updateGithubStarCount(owner, repo) {
       console.error('Failed to fetch GitHub stars:', error);
       starCountElem.textContent = 'N/A';
     }
-  }
+}
   
   
   
@@ -129,61 +156,75 @@ async function updateGithubStarCount(owner, repo) {
 
 
   const container = document.querySelector('.container');
-  const sections = document.querySelectorAll('.snap-section');
+  // Changed to target all sections within the container for the snap logic
+  const snapSections = document.querySelectorAll('.container > section'); 
 
-  let isAutoScrolling = false;
-  let scrollTimer = null;
+  // Only proceed with snap-scrolling logic if a container and anime.js are present
+  if (container && typeof anime !== 'undefined') {
 
-  function getVisibleSectionIndex() {
-    const containerRect = container.getBoundingClientRect();
-    const containerTop = container.scrollTop;
-    const viewHeight = window.innerHeight;
+      let isAutoScrolling = false;
+      let scrollTimer = null;
 
-    let maxVisibleRatio = 0;
-    let bestIndex = -1;
+      function getVisibleSectionIndex() {
+          const containerTop = container.scrollTop;
+          const viewHeight = window.innerHeight;
 
-    sections.forEach((section, index) => {
-      const sectionTop = section.offsetTop;
-      const sectionBottom = sectionTop + section.offsetHeight;
+          let maxVisibleRatio = 0;
+          let bestIndex = -1;
 
-      const visibleTop = Math.max(containerTop, sectionTop);
-      const visibleBottom = Math.min(containerTop + viewHeight, sectionBottom);
-      const visibleHeight = Math.max(0, visibleBottom - visibleTop);
-      const ratio = visibleHeight / section.offsetHeight;
+          snapSections.forEach((section, index) => {
+              // Calculate section position relative to container's content
+              const sectionTop = section.offsetTop;
+              const sectionBottom = sectionTop + section.offsetHeight;
 
-      if (ratio > maxVisibleRatio) {
-        maxVisibleRatio = ratio;
-        bestIndex = index;
+              // Calculate visible portion within the viewport (not just container)
+              const visibleTop = Math.max(containerTop, sectionTop);
+              const visibleBottom = Math.min(containerTop + viewHeight, sectionBottom);
+              const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+              const ratio = visibleHeight / section.offsetHeight;
+
+              if (ratio > maxVisibleRatio) {
+                  maxVisibleRatio = ratio;
+                  bestIndex = index;
+              }
+          });
+
+          // Snap only if a section is highly visible (e.g., > 60% might be safer than 90%)
+          return maxVisibleRatio >= 0.6 ? bestIndex : -1; 
       }
-    });
 
-    return maxVisibleRatio >= 0.9 ? bestIndex : -1; // snap only if ≥ 90% visible
+      container.addEventListener('scroll', () => {
+          if (isAutoScrolling) return;
+          clearTimeout(scrollTimer);
+
+          scrollTimer = setTimeout(() => {
+              const targetIndex = getVisibleSectionIndex();
+              
+              if (targetIndex !== -1) {
+                  const targetScrollTop = snapSections[targetIndex].offsetTop;
+
+                  // Check if already close to prevent unnecessary animation
+                  if (Math.abs(container.scrollTop - targetScrollTop) < 5) {
+                      return;
+                  }
+
+                  isAutoScrolling = true;
+                  anime({
+                      targets: container,
+                      scrollTop: targetScrollTop,
+                      duration: 700,
+                      easing: 'easeOutCubic',
+                      complete: () => {
+                          isAutoScrolling = false;
+                      }
+                  });
+              }
+          }, 150); // wait a bit longer to ensure scroll fully stopped
+      });
   }
+  
 
-  container.addEventListener('scroll', () => {
-    if (isAutoScrolling) return;
-    clearTimeout(scrollTimer);
-
-    scrollTimer = setTimeout(() => {
-      const targetIndex = getVisibleSectionIndex();
-      if (targetIndex !== -1) {
-        const targetScrollTop = sections[targetIndex].offsetTop;
-
-        isAutoScrolling = true;
-        anime({
-          targets: container,
-          scrollTop: targetScrollTop,
-          duration: 700,
-          easing: 'easeOutCubic',
-          complete: () => {
-            isAutoScrolling = false;
-          }
-        });
-      }
-    }, 100); // wait 100ms after scroll stops
-  });
-
-
+  // General link smoother scroll functionality (unrelated to snap scroll)
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const targetId = this.getAttribute('href').substring(1);
@@ -192,18 +233,24 @@ async function updateGithubStarCount(owner, repo) {
         e.preventDefault();
 
         const scrollContainer = document.querySelector('.container');
+        if (!scrollContainer) return;
+
         const targetPosition = targetElement.offsetTop;
 
-        anime({
-          targets: scrollContainer,
-          scrollTop: targetPosition,
-          duration: 700,
-          easing: 'easeInOutQuad'
-        });
+        if (typeof anime !== 'undefined') {
+            anime({
+              targets: scrollContainer,
+              scrollTop: targetPosition,
+              duration: 700,
+              easing: 'easeInOutQuad'
+            });
+        } else {
+             // Fallback if anime.js is not loaded
+             scrollContainer.scrollTop = targetPosition;
+        }
       }
     });
   });
   
-
-  
-  updateGithubStarCount('pollinations', 'pollinations');
+  // Initialize star count fetch
+  updateGithubStarCount();

@@ -10,11 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDisplayedCount = 0;
     let currentDisplayedRate = 0;
 
+    // Helper to get anime if available
+    const getAnime = () => typeof anime !== 'undefined' ? anime : null;
+
     // --- Data Processing Function ---
     function processFeedData(data) {
         try {
             if (!data || typeof data !== 'object') {
-                console.error('Invalid data format received:', data);
+                // console.error('Invalid data format received:', data);
                 return;
             }
 
@@ -34,16 +37,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     responseTimesSummary.shift(); // Keep array size limited
                 }
             } else {
-                console.warn('Received data with invalid duration, using fallback:', data);
+                // console.warn('Received data with invalid duration, using fallback:', data);
             }
         } catch (error) {
-            console.error('Error processing feed data:', error);
+            // console.error('Error processing feed data:', error);
         }
     }
 
     // --- Update UI Function with Animations ---
     function updateUI() {
         const now = Date.now();
+        const animeLib = getAnime();
 
         // Filter requests from the last minute
         lastMinuteRequests = lastMinuteRequests.filter(time => now - time <= 60000);
@@ -57,21 +61,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Animate Requests Per Minute (countNumberElement) ---
         if (countNumberElement && currentDisplayedCount !== newCount) {
-            anime({
-                targets: { count: currentDisplayedCount }, // Animate a plain object's 'count' property
-                count: newCount, // The target value
-                round: 1, // Round to the nearest integer
-                easing: 'easeInOutQuad', // Choose an easing function
-                duration: 800, // Animation duration in ms
-                update: function(anim) {
-                    // Update the actual element's text with the animated value
-                    countNumberElement.innerText = Math.round(anim.animations[0].currentValue).toLocaleString();
-                },
-                complete: function() {
-                     // Store the final animated value
-                    currentDisplayedCount = newCount;
-                }
-            });
+            if (animeLib) {
+                animeLib({
+                    targets: { count: currentDisplayedCount }, // Animate a plain object's 'count' property
+                    count: newCount, // The target value
+                    round: 1, // Round to the nearest integer
+                    easing: 'easeInOutQuad', // Choose an easing function
+                    duration: 800, // Animation duration in ms
+                    update: function(anim) {
+                        // Update the actual element's text with the animated value
+                        countNumberElement.innerText = Math.round(anim.animations[0].currentValue).toLocaleString();
+                    },
+                    complete: function() {
+                         // Store the final animated value
+                        currentDisplayedCount = newCount;
+                    }
+                });
+            } else {
+                // No anime.js, just set value
+                 countNumberElement.innerText = newCount.toLocaleString();
+                 currentDisplayedCount = newCount;
+            }
         } else if (countNumberElement && currentDisplayedCount === newCount) {
              // If the number didn't change, just ensure the text is correct (might be needed on first load)
              countNumberElement.innerText = newCount.toLocaleString();
@@ -81,21 +91,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Animate Average Response Time (generationRateElement) ---
          if (generationRateElement && currentDisplayedRate !== newRate) {
-            anime({
-                targets: { rate: currentDisplayedRate }, // Animate a plain object's 'rate' property
-                rate: newRate, // The target value
-                round: 1, // Round to the nearest integer
-                easing: 'easeInOutQuad', // Choose an easing function
-                duration: 800, // Animation duration in ms
-                update: function(anim) {
-                    // Update the actual element's text with the animated value
-                    generationRateElement.innerText = Math.round(anim.animations[0].currentValue) + 'ms';
-                },
-                 complete: function() {
-                     // Store the final animated value
-                    currentDisplayedRate = newRate;
-                }
-            });
+             if (animeLib) {
+                animeLib({
+                    targets: { rate: currentDisplayedRate }, // Animate a plain object's 'rate' property
+                    rate: newRate, // The target value
+                    round: 1, // Round to the nearest integer
+                    easing: 'easeInOutQuad', // Choose an easing function
+                    duration: 800, // Animation duration in ms
+                    update: function(anim) {
+                        // Update the actual element's text with the animated value
+                        generationRateElement.innerText = Math.round(anim.animations[0].currentValue) + 'ms';
+                    },
+                     complete: function() {
+                         // Store the final animated value
+                        currentDisplayedRate = newRate;
+                    }
+                });
+            } else {
+                 // No anime.js, just set value
+                generationRateElement.innerText = newRate + 'ms';
+                currentDisplayedRate = newRate;
+            }
          } else if (generationRateElement && currentDisplayedRate === newRate) {
             // If the number didn't change, just ensure the text is correct
             generationRateElement.innerText = newRate + 'ms';
@@ -128,18 +144,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 newColor = '#FF4444'; // Red for high load
             }
 
-            // Get the current computed width style for Anime.js to animate from
-             const currentWidthStyle = serverLoadShower.style.width; // e.g., "50%"
-             // Anime.js can usually handle animating from the current style if the target is provided.
-
-            // Animate Width and Background Color
-            anime({
-                targets: serverLoadShower,
-                width: finalWidthPercentage + '%', // Animate to the target width percentage
-                backgroundColor: newColor, // Animate to the target color
-                easing: 'easeInOutQuad', // Easing for the bar movement
-                duration: 500 // Shorter duration for the bar
-            });
+            if (animeLib) {
+                // Animate Width and Background Color
+                animeLib({
+                    targets: serverLoadShower,
+                    width: finalWidthPercentage + '%', // Animate to the target width percentage
+                    backgroundColor: newColor, // Animate to the target color
+                    easing: 'easeInOutQuad', // Easing for the bar movement
+                    duration: 500 // Shorter duration for the bar
+                });
+            } else {
+                 serverLoadShower.style.width = finalWidthPercentage + '%';
+                 serverLoadShower.style.backgroundColor = newColor;
+            }
         }
     }
 
@@ -169,13 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     processFeedData(data);
                     retryCount = 0; // Reset retry count on successful message
                 } catch (parseError) {
-                    console.error('Error parsing feed data:', parseError);
+                    // console.error('Error parsing feed data:', parseError);
                 }
             };
 
             currentEventSource.onerror = function () {
-                console.error(`EventSource connection failed for ${url}.`);
-                currentEventSource.close(); // Ensure it's closed
+                // console.error(`EventSource connection failed for ${url}.`);
+                currentEventSource?.close(); // Ensure it's closed
 
                 if (retryCount < maxRetries) {
                     retryCount++;
@@ -183,10 +200,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const nextUrl = (retryCount % 2 === 1 && FALLBACK_URL) ? FALLBACK_URL : FEED_URL;
                     // Exponential backoff with jitter
                     const timeout = 1000 + (Math.pow(2, retryCount) * 500) + (Math.random() * 500);
-                    console.log(`Retrying connection with ${nextUrl} (${retryCount}/${maxRetries}) in ${Math.round(timeout / 1000)}s...`);
+                    // console.log(`Retrying connection with ${nextUrl} (${retryCount}/${maxRetries}) in ${Math.round(timeout / 1000)}s...`);
                     setTimeout(() => tryConnect(nextUrl, nextUrl === FALLBACK_URL), timeout);
                 } else {
-                    console.error('Max retries reached. EventSource connection failed permanently.');
+                    // console.error('Max retries reached. EventSource connection failed permanently.');
                     currentEventSource = null; // Clear reference
                 }
             };

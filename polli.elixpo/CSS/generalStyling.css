@@ -94,7 +94,8 @@ body {
     padding: 0 20px;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
-    overflow-y: smooth;
+    /* FIX: 'smooth' is not a valid value for overflow. Use 'auto' or 'scroll'. */
+    overflow-y: auto;
 }
 
 .container section {
@@ -147,6 +148,7 @@ body {
     font-size: 30px;
     font-weight: 700;
     background: linear-gradient(90deg, #ebf874bb, #a855f7);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-left: 10px;
@@ -215,7 +217,6 @@ body {
     background-color: var(--text);
     transition: var(--transition);
 }
-
 section.is-hidden > * {
     opacity: 0;
     transform: translateY(20px);
@@ -226,5 +227,4 @@ section.is-hidden > * {
     opacity: 1;
     transform: translateY(0px);
     transition: opacity 0.4s ease, transform 0.4s ease;
-  }
-  
+  } 

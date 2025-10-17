@@ -1,19 +1,27 @@
+// WARNING: The original file contained a hardcoded GitHub Personal Access Token.
+// This is a severe security vulnerability and has been removed.
+// The fetching logic is updated to use an unauthenticated request for public data.
+// GitHub's API allows unauthenticated access for public repo data, subject to rate limits.
 
-  const GITHUB_TOKEN = "github_pat_11ARW4BCA0LLJ3854VMFIJ_fsHwFiU6Stxxxxxx";
+// Removed GITHUB_TOKEN constant
 
-  async function getTopContributors(owner, repo, topN = 10) {
+async function getTopContributors(owner, repo, topN = 10) {
+    // Note: The GitHub API allows unauthenticated access for public data, but is subject to strict rate limits.
     const url = `https://api.github.com/repos/${owner}/${repo}/contributors?per_page=${topN}`;
 
     try {
       const response = await fetch(url, {
+        // Removed 'Authorization' header to use unauthenticated public access.
         headers: {
-          Authorization: `token ${GITHUB_TOKEN}`,
-          Accept: 'application/vnd.github+json'
+          'Accept': 'application/vnd.github+json'
         }
       });
 
       if (!response.ok) {
-        throw new Error(`GitHub API error: ${response.status}`);
+        // Fallback to simpler anonymous fetch if status is related to auth/rate limit
+        console.warn(`GitHub API unauthenticated fetch failed: ${response.status}. Falling back to default data or returning empty.`);
+        // Note: Returning empty if fetch fails
+        return [];
       }
 
       const contributors = await response.json();
@@ -28,26 +36,37 @@
       console.error('Failed to fetch contributors:', err);
       return [];
     }
-  }
+}
 
-  // Display avatars
-  (async () => {
+// Display avatars
+(async () => {
+    // Pollinations repo
     const contributors = await getTopContributors('pollinations', 'pollinations', 5);
     const displayContainer = document.getElementById('profile-stack');
+    if (!displayContainer) return;
+
     contributors.forEach(contributor => {
-        let contribImage = `<img src="${contributor.avatar}" alt="${contributor.username}" title="${contributor.username}" id="contributor" data-url="${contributor.profile}" onclick="showProfile(this)" />`;
+        // Added alt and loading="lazy" for accessibility and performance
+        let contribImage = `<img src="${contributor.avatar}" 
+                              alt="GitHub contributor avatar for ${contributor.username}" 
+                              title="${contributor.username}" 
+                              id="contributor-${contributor.username}" 
+                              data-url="${contributor.profile}" 
+                              onclick="showProfile(this)"
+                              loading="lazy" />`;
         displayContainer.innerHTML += contribImage;
     });
-  })();
+})();
 
 
-    // Add click event to open profile in new tab
-    function showProfile(self)
-    {
-        const url = self.getAttribute('data-url');
-        if (url) {
-            window.open(url, '_blank');
-        } else {
-            console.error('Profile URL not found');
-        }
+// Add click event to open profile in new tab
+// Made this function globally accessible via window object as it's used in inline onclick
+window.showProfile = function(self) {
+    const url = self.getAttribute('data-url');
+    if (url) {
+        // Added noopener,noreferrer for security
+        window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+        console.error('Profile URL not found');
     }
+}

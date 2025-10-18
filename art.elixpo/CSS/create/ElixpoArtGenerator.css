@@ -2563,3 +2563,29 @@ body {
   border-width: 0 0.15em 0.15em 0;
   transform: rotate(45deg);
 }
+
+
+
+.toast-message {
+    position: fixed;
+    bottom: -100px; /* Start off-screen */
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    z-index: 9999;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: bottom 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.toast-message.show {
+    bottom: 30px; /* Slide in */
+    opacity: 1;
+    visibility: visible;
+}

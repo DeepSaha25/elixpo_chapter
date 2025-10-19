@@ -47,7 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Check if in imageMode and if the selected model is unsupported
             // 'window.imageMode' should be set in imageProcessPrompt.js
             if (window.imageMode && (model === 'flux' || model === 'turbo')) {
-                showUnsupportedModelToast();
+                // Use the existing notify() function from createArtGeneral.js
+                notify("This model does not support image-to-image edits.", "error");
                 return; // Prevent switching to the unsupported model
             }
 
@@ -57,23 +58,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
-
-/**
- * Shows a toast notification when an unsupported model is selected in image-to-image mode.
- */
-function showUnsupportedModelToast() {
-    const toast = document.getElementById('unsupported-model-toast');
-    if (!toast) {
-        console.error("Toast element not found!");
-        return;
-    }
-
-    toast.textContent = "This model does not support image-to-image edits.";
-    toast.classList.add('show');
-
-    // Hide the toast after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 3000);
-}
